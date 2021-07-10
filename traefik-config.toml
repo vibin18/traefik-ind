@@ -1,0 +1,30 @@
+[global]
+  checkNewVersion = true
+  sendAnonymousUsage = false
+
+[api]
+  insecure = true
+  dashboard = true
+
+[log]
+  level = "DEBUG"
+[accessLog]
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+  [entryPoints.websecure]
+    address = ":443"
+  [entryPoints.traefik]
+    address = ":8081"
+
+[certificatesResolvers.vbinresolver.acme]
+  email = "xyz@gmail.com"
+  storage = "vbin-acme.json"
+  [certificatesResolvers.vbinresolver.acme.dnsChallenge]
+    provider = "cloudflare"
+    delayBeforeCheck = 10
+
+[providers]
+  [providers.file]
+    filename = "/etc/traefik/provider.toml"

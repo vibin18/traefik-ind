@@ -1,0 +1,15 @@
+[http.routers]
+ [http.routers.Router-1]
+   entryPoints = ["web", "websecure"]
+    rule = "Host(`vbin.in`) || HostRegexp(`{subdomain:[a-z]+}.ind.vbin.in`)"
+     service = "service-1"
+    [http.routers.Router-1.tls]
+      certResolver = "vbinresolver" # From static configuration
+      [[http.routers.Router-1.tls.domains]]
+        main = "vbin.in"
+        sans = ["*.ind.vbin.in"]
+
+[http.services]
+ [http.services.service-1.loadBalancer]
+   [[http.services.service-1.loadBalancer.servers]]
+      url = "http://192.168.4.5:9191"
